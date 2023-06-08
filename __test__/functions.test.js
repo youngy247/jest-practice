@@ -1,6 +1,6 @@
-const functions = require('../functions')
 const { calculateAge } = require('../functions');
 const { calculateTax } = require('../functions');
+const { greet } = require('../functions');
 
 describe('calculateAge', () => {
     it('should calculate the correct age based on the provided date of birth', () => {
@@ -32,5 +32,25 @@ describe('calculateTax', () => {
         // Test case 4: Salary above all brackets
         const result4 = calculateTax(30000);
         expect(result4).toBe(875);
+    });
+});
+
+describe('greet', () => {
+    it('should greet the person with their name', () => {
+        const result = greet('John', false);
+        expect(result).toBe('Hi John.');
+    });
+
+    it('should greet the person with their name and show random weather when showWeather is true', () => {
+        // Mocking the random index to always return 0 (sunny weather)
+        Math.random = jest.fn().mockReturnValue(0);
+
+        const result = greet('Alice');
+        expect(result).toBe('Hi Alice. It is sunny today!');
+    });
+
+    it('should greet the person with their name and show no weather when showWeather is false', () => {
+        const result = greet('Bob', false);
+        expect(result).toBe('Hi Bob.');
     });
 });
